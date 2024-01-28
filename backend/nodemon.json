@@ -1,0 +1,9 @@
+{
+    "ext": "ts,js,json",
+    "ignore": [
+        "build",
+        "",
+        "node_modules"
+    ],
+    "exec": "npx ts-node src/index.ts"
+}
