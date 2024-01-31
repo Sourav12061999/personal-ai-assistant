@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
-const UserSchema = new Schema({
+const GmailLinkSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     name: { type: String, required: false }
 });
 
-const UserModel = model("users", UserSchema);
+const GmailLinkModel = model("gmail_link", GmailLinkSchema);
 
-export default UserModel;
+export default GmailLinkModel;
 

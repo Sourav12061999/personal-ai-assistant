@@ -1,3 +1,3 @@
-import AuthRouter from "./auth.route";
+import PermissionRouter from "./permission.route";
 
-export { AuthRouter };
+export { PermissionRouter };
