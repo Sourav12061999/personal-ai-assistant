@@ -3,7 +3,11 @@ import { google } from "googleapis"
 
 import { Router } from "express";
 import { authenticateWithGoogle } from "../utils";
+import { FRONTEND_URL } from "../env";
 const router = Router();
+
+
+const DEFAULT_PATH = "/"
 router.get('/callback', async (req, res) => {
     const { code } = req.query;
     if (typeof code !== "string") {
@@ -12,11 +16,9 @@ router.get('/callback', async (req, res) => {
         });;
     }
     const { tokens } = await authenticateWithGoogle(code);
-    res.status(200).json({
-        tokens
-    });
+    res.redirect(FRONTEND_URL!);
 });
 
 
-export default {router, defaultPath: "/"};
+export default {router, defaultPath: DEFAULT_PATH};
 
