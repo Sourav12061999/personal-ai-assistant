@@ -1,8 +1,11 @@
-import {} from 'react'
+import { } from 'react'
+import Authentication from '../Features/Authentication'
 
 function Signin() {
   return (
-    <h1>Signin</h1>
+    <div>
+      <Authentication />
+    </div>
   )
 }
 
