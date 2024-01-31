@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { UserModel } from "../models";
 import { sign } from "jsonwebtoken";
-import { JWT_SECRET } from "src/env";
+import { JWT_SECRET } from "../env";
 
+const DEFAULT_PATH = "/auth/";
 const router = Router();
 
 router.post("/signin", async (req, res) => { 
@@ -35,3 +36,5 @@ router.post("/signin", async (req, res) => {
         });
     }
 })
+
+export default { router, defaultPath:DEFAULT_PATH};

@@ -1,11 +1,12 @@
 import express from 'express';
 import { MONGO_URL, PORT } from './env';
-import { PermissionRouter } from './routes';
+import { PermissionRouter, AuthRouter } from './routes';
 import { connect } from 'mongoose';
 
 const app = express();
 app.use(express.json());
 app.use(PermissionRouter.defaultPath, PermissionRouter.router);
+app.use(AuthRouter.defaultPath, AuthRouter.router);
 const startServer = async () => {
     await connect(MONGO_URL);
     app.listen(PORT, () => {
