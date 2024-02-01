@@ -19,7 +19,7 @@ function Authentication() {
                 Welcome to Jarvis
             </Title>
             <Text size="xs" ta={"center"} c="dimmed">Your Personal AI Assistant ready to make you IronMan</Text>
-            <Text mt={50} c="dimmed" size="md" ta="center" mt={5}>
+            <Text mt={50} c="dimmed" size="md" ta="center">
                 Do not have an account yet?{' '}
                 <Anchor size="md" component="button">
                     Create account
