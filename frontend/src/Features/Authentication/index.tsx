@@ -4,31 +4,50 @@ import {
     Checkbox,
     Anchor,
     Paper,
-    Title,
-    Text,
-    Container,
     Group,
     Button,
 } from '@mantine/core';
 import classes from './authentication.module.css';
+import { useState } from 'react';
+import { AuthAPIs } from '../../APIs';
+import { IconX, IconCheck } from '@tabler/icons-react';
+
+const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
+const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
+import { Notification, rem } from '@mantine/core';
+
+enum SubmissionStateType {
+    Loading,
+    Sucessful,
+    Failure,
+}
 
 function Authentication() {
-    return (
-        <Container size={420} my={40}>
-            <Title ta="center" className={classes.title}>
-                Welcome to Jarvis
-            </Title>
-            <Text size="xs" ta={"center"} c="dimmed">Your Personal AI Assistant ready to make you IronMan</Text>
-            <Text mt={50} c="dimmed" size="md" ta="center">
-                Do not have an account yet?{' '}
-                <Anchor size="md" component="button">
-                    Create account
-                </Anchor>
-            </Text>
 
+    const [signinFormState, setSigninFormState] = useState({
+        email: "",
+        password: "",
+    });
+
+    const [SubmissionState, setSubmissionState] = useState<{ type: SubmissionStateType, message?: string } | null>(null);
+
+
+    const submitHandler = async () => {
+        try {
+            setSubmissionState({ type: SubmissionStateType.Loading });
+            const data = (await AuthAPIs.Signin(signinFormState)).data;
+            localStorage.setItem("authorization", data.token);
+            setSubmissionState({ type: SubmissionStateType.Sucessful, message: `Welcome back ${data.name || data.email}` });
+        } catch (error: any) {
+            setSubmissionState({ type: SubmissionStateType.Failure, message: error.message || "Unknown Error" });
+        }
+
+    }
+    return (
+        <>
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-                <TextInput label="Email" placeholder="you@mantine.dev" required />
-                <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+                <TextInput label="Email" placeholder="you@mantine.dev" required value={signinFormState.email} onChange={(e) => setSigninFormState({ ...signinFormState, email: e.target.value })} />
+                <PasswordInput label="Password" placeholder="Your password" required mt="md" value={signinFormState.password} onChange={(e) => setSigninFormState({ ...signinFormState, password: e.target.value })} />
                 <Group justify="space-between" mt="lg">
                     <div className={classes.custom_checkbox}>
                         <Checkbox label="Remember me" />
@@ -37,11 +56,20 @@ function Authentication() {
                         Forgot password?
                     </Anchor>
                 </Group>
-                <Button fullWidth mt="xl">
+                <Button fullWidth mt="xl" onClick={submitHandler}>
                     Sign in
                 </Button>
             </Paper>
-        </Container>
+            {SubmissionState?.type === SubmissionStateType.Sucessful && <Notification icon={checkIcon} color="teal" title="All good!" mt="md">
+                {SubmissionState.message || "Congrats"}
+            </Notification>}
+
+            {SubmissionState?.type === SubmissionStateType.Failure && <Notification icon={xIcon} color="red" title="Signin Error!">
+                {SubmissionState.message || "Error"}
+            </Notification>}
+
+
+        </>
     );
 }
 

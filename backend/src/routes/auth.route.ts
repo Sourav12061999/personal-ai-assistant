@@ -3,7 +3,7 @@ import { UserModel } from "../models";
 import { sign } from "jsonwebtoken";
 import { JWT_SECRET } from "../env";
 
-const DEFAULT_PATH = "/auth/";
+const DEFAULT_PATH = "/auth";
 const router = Router();
 
 router.post("/signin", async (req, res) => { 
