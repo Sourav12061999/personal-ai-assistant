@@ -1,4 +1,4 @@
-import { ReactElement, createContext, useState } from 'react'
+import {  ReactNode, createContext, useState } from 'react'
 
 
 interface ContextType {
@@ -10,10 +10,10 @@ interface AppStateType {
     isSigning: boolean,
     token?: string;
 }
-const AppContext = createContext<ContextType | null>(null);
+export const AppContext = createContext<ContextType | null>(null);
 
 interface PropTypes {
-    children: ReactElement
+    children: ReactNode
 }
 function Context({ children }: PropTypes) {
     const [AppState, setAppState] = useState<AppStateType>({

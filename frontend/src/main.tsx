@@ -5,10 +5,13 @@ import './global.css'
 import '@mantine/core/styles.css';
 
 import { MantineProvider } from '@mantine/core';
+import Context from './Features/Context/index.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <MantineProvider>
+    <Context>
   <React.StrictMode>
     <App />
-    </React.StrictMode>
+      </React.StrictMode>
+    </Context>
   </MantineProvider>,
 )
