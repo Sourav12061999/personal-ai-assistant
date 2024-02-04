@@ -46,7 +46,6 @@ router.get("/verify-token", async (req, res) => {
         if (!token) {
             return res.status(401).json({ msg: "Unauthorized - Token not provided" });
         }
-        console.log("Here is the token:-", token);
 
 
         const _id = verify(token, JWT_SECRET);

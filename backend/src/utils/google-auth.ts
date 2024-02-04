@@ -9,8 +9,10 @@ async function authenticateWithGoogle(code: string) {
 
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
+    const peopleApi = google.people({ version: 'v1', auth: oauth2Client });
+    const { data } = await peopleApi.people.get({ resourceName: 'people/me', personFields: 'emailAddresses' });
 
-    return { tokens };
+    return { tokens,  data};
 }
 
 export default authenticateWithGoogle;
