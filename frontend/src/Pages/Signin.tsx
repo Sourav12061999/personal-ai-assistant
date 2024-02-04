@@ -1,4 +1,4 @@
-import { } from 'react'
+import { useContext, useEffect} from 'react'
 import Authentication from '../Features/Authentication'
 import {
   Anchor,
@@ -6,7 +6,23 @@ import {
   Text,
   Container,
 } from '@mantine/core';
+import {AppContext} from '../Features/Context';
+import { useNavigate } from 'react-router-dom';
 function Signin() {
+  const context = useContext(AppContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!context) {
+      return;
+    }
+
+    if (context.state.isSigning && context.state.token) {
+      navigate("/");
+    }
+  }, [context?.state.isSigning])
+  
+
   return (
     <main>
       <Container size={420} my={40}>

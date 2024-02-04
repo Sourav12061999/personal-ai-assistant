@@ -11,6 +11,8 @@ import classes from './authentication.module.css';
 import { useState } from 'react';
 import { AuthAPIs } from '../../APIs';
 import { IconX, IconCheck } from '@tabler/icons-react';
+import { useContext } from 'react';
+import { AppContext } from '../Context';
 
 const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
 const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
@@ -30,14 +32,28 @@ function Authentication() {
     });
 
     const [SubmissionState, setSubmissionState] = useState<{ type: SubmissionStateType, message?: string } | null>(null);
+    const context = useContext(AppContext);
 
 
     const submitHandler = async () => {
         try {
             setSubmissionState({ type: SubmissionStateType.Loading });
-            const data = (await AuthAPIs.Signin(signinFormState)).data;
-            localStorage.setItem("authorization", data.token);
+            const response = (await AuthAPIs.Signin(signinFormState));
+            const data = await response.json();
+
+            if (response.status !== 200) {
+                return setSubmissionState({ type: SubmissionStateType.Failure, message:  data.msg || "Unknown Error" });
+            }
+            localStorage.setItem("authorization", data.data.token);
             setSubmissionState({ type: SubmissionStateType.Sucessful, message: `Welcome back ${data.name || data.email}` });
+            if (context && context.setState) {
+                context.setState({
+                    ...context.state,
+                    isSigning: true,
+                    token: data.data.token,
+                })
+            }
+
         } catch (error: any) {
             setSubmissionState({ type: SubmissionStateType.Failure, message: error.message || "Unknown Error" });
         }

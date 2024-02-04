@@ -1,9 +1,8 @@
 import { useContext, useEffect } from 'react'
 import { scope } from '../constants';
-import Sidebar from '../Features/Sidebar';
-import Navbar from '../Features/Navbar';
 import {AppContext } from "../Features/Context";
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@mantine/core';
 
 function Home() {
   // const GOOGLE_CLIENT = import.meta.env.VITE_GOOGLE_CLIENT;
@@ -26,12 +25,9 @@ function Home() {
     
   }, []);
   return (
-    <main>
-      {/* <button onClick={authUser}>Login with Gmail</button> */}
-      {/* <Navbar/> */}
-      <Sidebar />
-      
-    </main>
+    <Box>
+      <h1>Home</h1>
+    </Box>
   )
 }
 

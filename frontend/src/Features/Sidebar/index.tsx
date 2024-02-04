@@ -13,32 +13,36 @@ import {
 } from '@tabler/icons-react';
 
 import classes from './sidebar.module.css';
+import { Link } from 'react-router-dom';
 
 interface NavbarLinkProps {
     icon: typeof IconHome2;
     label: string;
     active?: boolean;
     onClick?(): void;
+    link: string;
 }
 
-function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
+function NavbarLink({ icon: Icon, label, active, onClick, link }: NavbarLinkProps) {
     return (
         <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
+            <Link to={link}>
             <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
                 <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-            </UnstyledButton>
+                </UnstyledButton>
+            </Link>
         </Tooltip>
     );
 }
 
 const mockdata = [
-    { icon: IconHome2, label: 'Home' },
-    { icon: IconGauge, label: 'Dashboard' },
-    { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-    { icon: IconCalendarStats, label: 'Releases' },
-    { icon: IconUser, label: 'Account' },
-    { icon: IconFingerprint, label: 'Security' },
-    { icon: IconSettings, label: 'Settings' },
+    { icon: IconHome2, label: 'Home' , link: "/" },
+    { icon: IconGauge, label: 'Dashboard', link: "/train" },
+    // { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
+    // { icon: IconCalendarStats, label: 'Releases' },
+    { icon: IconUser, label: 'Account', link: "/accounts" },
+    { icon: IconFingerprint, label: 'Security', link: "/permissions" },
+    // { icon: IconSettings, label: 'Settings' },
 ];
 
 function Sidebar() {
@@ -66,8 +70,8 @@ function Sidebar() {
             </div>
 
             <Stack justify="center" gap={0}>
-                <NavbarLink icon={IconSwitchHorizontal} label="Change account" />
-                <NavbarLink icon={IconLogout} label="Logout" />
+                <NavbarLink icon={IconSwitchHorizontal} label="Change account" link='' />
+                <NavbarLink icon={IconLogout} label="Logout" link=''/>
             </Stack>
         </nav>
     );
